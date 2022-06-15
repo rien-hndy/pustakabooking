@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-<html>
-
-<head>
+<html><head>
     <title></title>
-</head>
-
-<body>
+</head><body>
     <style type="text/css">
         .table-data {
             width: 100%;
@@ -33,7 +29,6 @@
     </h3>
     <br />
     <table class="table-data">
-        <thead>
             <tr>
                 <th>No</th>
                 <th>Nama Anggota</th>
@@ -44,8 +39,6 @@
                 <th>Total Denda</th>
                 <th>Status</th>
             </tr>
-        </thead>
-        <tbody>
             <?php
             $no = 1;
             foreach ($laporan as $l) {
@@ -63,11 +56,5 @@
             <?php
             }
             ?>
-        </tbody>
     </table>
-    <script type="text/javascript">
-        window.print();
-    </script>
-</body>
-
-</html>
+</body></html>

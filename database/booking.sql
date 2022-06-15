@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 27 Mar 2022 pada 17.57
+-- Generation Time: 15 Jun 2022 pada 16.20
 -- Versi Server: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `pustaka`
+-- Database: `booking`
 --
 
 -- --------------------------------------------------------
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `booking` (
   `tgl_booking` date NOT NULL,
   `batas_ambil` date NOT NULL,
   `id_user` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `booking_detail` (
   `id` int(11) NOT NULL,
   `id_booking` varchar(12) NOT NULL,
   `id_buku` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -90,10 +90,21 @@ INSERT INTO `buku` (`id`, `judul_buku`, `id_kategori`, `pengarang`, `penerbit`, 
 --
 
 CREATE TABLE IF NOT EXISTS `detail_pinjam` (
-  `no_pinjam` varchar(12) CHARACTER SET utf8mb4 NOT NULL,
+  `no_pinjam` varchar(12) NOT NULL,
   `id_buku` int(11) NOT NULL,
   `denda` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `detail_pinjam`
+--
+
+INSERT INTO `detail_pinjam` (`no_pinjam`, `id_buku`, `denda`) VALUES
+('09062022001', 1, 5000),
+('09062022001', 2, 5000),
+('09062022002', 1, 5000),
+('09062022002', 2, 5000),
+('09062022002', 5, 5000);
 
 -- --------------------------------------------------------
 
@@ -124,19 +135,51 @@ INSERT INTO `kategori` (`id`, `kategori`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `menu`
+--
+
+CREATE TABLE IF NOT EXISTS `menu` (
+  `id` int(11) NOT NULL,
+  `menu` varchar(128) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `menu`
+--
+
+INSERT INTO `menu` (`id`, `menu`) VALUES
+(1, 'Admin'),
+(2, 'User'),
+(3, 'Menu'),
+(4, 'Utility'),
+(5, 'Buku'),
+(6, 'Anggota'),
+(7, 'Laporan');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `pinjam`
 --
 
 CREATE TABLE IF NOT EXISTS `pinjam` (
-  `no_pinjam` varchar(12) CHARACTER SET utf8mb4 NOT NULL,
+  `no_pinjam` varchar(12) NOT NULL,
   `tgl_pinjam` date NOT NULL,
-  `id_booking` varchar(12) CHARACTER SET utf8mb4 NOT NULL,
+  `id_booking` varchar(12) NOT NULL,
   `id_user` int(11) NOT NULL,
   `tgl_kembali` date NOT NULL,
   `tgl_pengembalian` date NOT NULL,
-  `status` enum('Pinjam','Kembali') CHARACTER SET utf8mb4 NOT NULL DEFAULT 'Pinjam',
+  `status` enum('Pinjam','Kembali') NOT NULL DEFAULT 'Pinjam',
   `total_denda` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `pinjam`
+--
+
+INSERT INTO `pinjam` (`no_pinjam`, `tgl_pinjam`, `id_booking`, `id_user`, `tgl_kembali`, `tgl_pengembalian`, `status`, `total_denda`) VALUES
+('09062022001', '2022-06-09', '09062022001', 17, '0000-00-00', '2022-06-09', 'Kembali', 0),
+('09062022002', '2022-06-09', '09062022001', 17, '2022-06-12', '2022-06-09', 'Kembali', 0);
 
 -- --------------------------------------------------------
 
@@ -173,8 +216,18 @@ CREATE TABLE IF NOT EXISTS `temp` (
   `image` varchar(255) NOT NULL,
   `penulis` varchar(128) NOT NULL,
   `penerbit` varchar(128) NOT NULL,
-  `tahun_penerbit` year(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `tahun_terbit` year(4) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `temp`
+--
+
+INSERT INTO `temp` (`id`, `tgl_booking`, `id_user`, `email_user`, `id_buku`, `judul_buku`, `image`, `penulis`, `penerbit`, `tahun_terbit`) VALUES
+(1, '2022-06-12 12:11:18', '1', 'yanameli1707@gmail.com', 2, 'Mudah Belajar Komputer untuk Anak', 'img1557402397.jpg', 'Bambang Agus Setiawan', 'Huta Media', 2014),
+(2, '2022-06-15 21:13:38', '21', 'admin10@gmail.com', 1, 'Statistika dengan Program Komputer', 'img1557402455.jpg', 'Ahmad Kholiqul Amin', 'Deep Publish', 2014),
+(3, '2022-06-15 21:13:42', '21', 'admin10@gmail.com', 5, 'PHP Komplet', 'img1555522493.jpg', 'Jubilee', 'Elex Media Komputindo', 2017),
+(4, '2022-06-15 21:13:57', '21', 'admin10@gmail.com', 10, 'Detektif Conan Ep 200', 'img1557401465.jpg', 'Okigawa sasuke', 'Cultura', 2016);
 
 -- --------------------------------------------------------
 
@@ -185,28 +238,23 @@ CREATE TABLE IF NOT EXISTS `temp` (
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL,
   `nama` varchar(128) NOT NULL,
+  `alamat` text NOT NULL,
   `email` varchar(128) NOT NULL,
   `image` varchar(128) NOT NULL,
   `password` varchar(256) NOT NULL,
   `role_id` int(11) NOT NULL,
   `is_active` int(1) NOT NULL,
-  `tanggal_input` int(11) NOT NULL,
-  `alamat` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+  `tanggal_input` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `user` (`id`, `nama`, `email`, `image`, `password`, `role_id`, `is_active`, `tanggal_input`, `alamat`) VALUES
-(1, 'Monika Libriany', 'monikalibriany@gmail.com', 'pro1557486527.jpg', 'forgiveness', 1, 1, 22032022, 'jl asia baru 1'),
-(2, 'Park Chanyeol', 'park.chanyeol@gmail.com', 'default.jpg', 'park123', 1, 1, 19032022, 'jl mars 1'),
-(3, 'Kim Jongin', 'kai.kim@gmail.com', 'pro1557648081.jpg', 'kai123', 1, 1, 19032022, 'jl mars 2'),
-(8, 'Oh Sehun', 'oh.sehun@gmail.com', 'pro1557486527.jpg', 'sehun111', 1, 1, 19032022, 'jl mars 3'),
-(15, 'Andriansah', 'andriansah.aiy@bsi.ac.id', 'default.jpg', '$2y$10$perspnO9EwfN24C1UnIlVuJl9WfZazMq.KynnKNcTdqprkVSfcmiC', 1, 1, 1563868080, ''),
-(16, 'Imam Khotib', 'imamkhotib0@gmail.com', 'default.jpg', '$2y$10$G6Z.Bq1htczywNfgmC0Ti.WTidif/a7ztpgMOyj1r7v6UWJzDSOmW', 1, 1, 1564436443, ''),
-(17, 'monika libriany', 'monikalibriany@gmail.com', 'default.jpg', '$2y$10$xoI6w5elrv1IPL/eV0S1Ce34t7t8Iks6KfXiqb3yPJKwFpNQzlVZe', 2, 1, 1647879736, ''),
-(18, 'Monika Libriany', 'gladysangelinalarosa@gmail.com', 'pro1647956178.jpg', '$2y$10$MrUNbxvwv3cS0fRX.VO7k.k5vo5ssYDhsFkOdQOwpZSDyHhzQECwG', 2, 1, 1647956093, '');
+INSERT INTO `user` (`id`, `nama`, `alamat`, `email`, `image`, `password`, `role_id`, `is_active`, `tanggal_input`) VALUES
+(3, 'Imam Khotib', '', 'imamkhotib0@gmail.com', 'default.jpg', '$2y$10$G6Z.Bq1htczywNfgmC0Ti.WTidif/a7ztpgMOyj1r7v6UWJzDSOmW', 1, 1, 1564436443),
+(15, 'Andriansah', '', 'andriansah.aiy@bsi.ac.id', 'default.jpg', '$2y$10$perspnO9EwfN24C1UnIlVuJl9WfZazMq.KynnKNcTdqprkVSfcmiC', 1, 1, 1563868080),
+(25, 'admin2', 'jakarta utara', 'admin2@gmail.com', 'default.jpg', '$2y$10$anRLOIxmplwPJOuCMbymluGJn0GA4ypCQBAjlJNnjjDRE1qTMoLJy', 1, 1, 1655216720);
 
 --
 -- Indexes for dumped tables
@@ -234,6 +282,12 @@ ALTER TABLE `buku`
 -- Indexes for table `kategori`
 --
 ALTER TABLE `kategori`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `menu`
+--
+ALTER TABLE `menu`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -268,7 +322,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `booking_detail`
 --
 ALTER TABLE `booking_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `buku`
 --
@@ -280,6 +334,11 @@ ALTER TABLE `buku`
 ALTER TABLE `kategori`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
+-- AUTO_INCREMENT for table `menu`
+--
+ALTER TABLE `menu`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+--
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
@@ -288,12 +347,12 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `temp`
 --
 ALTER TABLE `temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -5,33 +5,32 @@ header("Pragma: no-cache");
 header("Expires: 0");
 ?>
 <style type="text/css">
-    .table-data{
+    .table-data {
         width: 100%;
         border-collapse: collapse;
     }
 
     .table-data tr th,
-    .table-data tr td{
-        border:1px solid black;
+    .table-data tr td {
+        border: 1px solid black;
         font-size: 11pt;
-        font-family:Verdana;
+        font-family: Verdana;
         padding: 10px 10px 10px 10px;
     }
 
-    .table-data th{
-        background-color:grey;
+    .table-data th {
+        background-color: grey;
     }
 
-    h3  {
-        font-family:Verdana;
+    h3 {
+        font-family: Verdana;
     }
 </style>
-
 <h3>
     <center>LAPORAN DATA PEMINJAMAN BUKU</center>
 </h3>
-<br/>
-<table class="table-data">
+<br />
+<table class="table-data" border=1>
     <thead>
         <tr>
             <th>No</th>
@@ -47,20 +46,20 @@ header("Expires: 0");
     <tbody>
         <?php
         $no = 1;
-        foreach($laporan as $l){
+        foreach ($laporan as $l) {
         ?>
-        <tr>
-            <td scope="row"><?= $no++; ?></td> 
-            <td><?= $l['nama']; ?></td>
-            <td><?= $l['judul_buku']; ?></td>
-            <td><?= $l['tgl_pinjam']; ?></td>
-            <td><?= $l['tgl_kembali']; ?></td>
-            <td><?= $l['tgl_pengembalian']; ?></td>
-            <td><?= $l['total_denda']; ?></td> 
-            <td><?= $l['status']; ?></td> 
-        </tr>
-    <?php
-    }
-    ?>
-</tbody>
+            <tr>
+                <td scope="row"><?= $no++; ?></td>
+                <td><?= $l['nama']; ?></td>
+                <td><?= $l['judul_buku']; ?></td>
+                <td><?= $l['tgl_pinjam']; ?></td>
+                <td><?= $l['tgl_kembali']; ?></td>
+                <td><?= $l['tgl_pengembalian']; ?></td>
+                <td><?= $l['total_denda']; ?></td>
+                <td><?= $l['status']; ?></td>
+            </tr>
+        <?php
+        }
+        ?>
+    </tbody>
 </table>

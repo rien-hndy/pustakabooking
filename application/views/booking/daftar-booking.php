@@ -28,7 +28,8 @@
                                             <button type="submit" class="btn btn-sm btn-outline-info"><i class="fas fa-fw fa-cart-plus"></i> Pinjam</button>
                                         </td>
                                         <td>
-                                            <input class="form-check-user rounded-sm" style="width:100px" type="text" name="denda" id="denda" value="5000"><?= form_error(); ?>
+                                            <input class="form-check-user rounded-sm" style="width:100px" type="text" name="denda" id="denda" value="5000">
+                                            <?= form_error(); ?>
                                         </td>
                                         <td>
                                             <input class="form-check-user rounded-sm" style="width:100px" type="text" name="lama" id="lama" value="3">
@@ -43,7 +44,8 @@
                 </td>
             </tr>
             <tr>
-                <td align="center"><a href="<?= base_url('pinjam/daftarBooking');?>" class="btn btn-link"><i class="fas fa-fw fa-refresh"></i> Refresh</a></td>
+                <td align="center"><a href="<?= base_url('pinjam/daftarBooking');
+                                            ?>" class="btn btn-link"><i class="fas fa-fw fa-refresh"></i> Refresh</a></td>
             </tr>
         </table>
     </center>

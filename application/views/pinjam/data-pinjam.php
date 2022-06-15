@@ -19,7 +19,6 @@
                                 <th>Pilihan</th>
                             </tr>
                             <?php
-
                             foreach ($pinjam as $p) {
                             ?>
                                 <tr>
@@ -36,32 +35,24 @@
                                         <?php
                                         $tgl1 = new DateTime($p['tgl_kembali']);
                                         $tgl2 = new DateTime();
-
-                                        if (date('Y-m-d') > $p['tgl_kembali']) {
-                                            $selisih = $tgl2->diff($tgl1)->format("%a");
-                                        } else {  
-                                            $selisih = 0;
-                                        }                                        
+                                        $selisih = $tgl2->diff($tgl1)->format("%a");
                                         echo $selisih;
                                         ?> Hari
                                     </td>
                                     <td><?= $p['denda']; ?></td>
-
                                     <?php if ($p['status'] == "Pinjam") {
                                         $status = "warning";
                                     } else {
                                         $status = "secondary";
                                     } ?>
                                     <td><i class="btn btn-outline-<?= $status; ?> btn-sm"><?= $p['status']; ?></i></td>
- 
                                     <?php
                                     if ($selisih < 0) {
-                                    $total_denda = $p['denda'] * 0;
+                                        $total_denda = $p['denda'] * 0;
                                     } else {
                                         $total_denda = $p['denda'] * $selisih;
                                     }
                                     ?>
-
                                     <td><?= $total_denda; ?>
                                         <input type="hidden" name="totaldenda" id="totaldenda" value="<?= $total_denda; ?>">
                                     </td>
@@ -79,7 +70,6 @@
                     </div>
                 </td>
             </tr>
-
         </table>
     </center>
 </div>

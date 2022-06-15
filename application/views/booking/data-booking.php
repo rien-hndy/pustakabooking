@@ -3,11 +3,11 @@
         <table>
             <tr>
                 <td>
-                    <div class="table-responsive full-width"> 
-                        <table class="table table-bordered table-striped table-hover" id="table-datatable"
+                    <div class="table-responsive full-width">
+                        <table class="table table-bordered table-striped table-hover" id="table-datatable">
                             <tr>
                                 <th>No.</th>
-                                <th>Buku</th> 
+                                <th>Buku</th>
                                 <th>Penulis</th>
                                 <th>penerbit</th>
                                 <th>Tahun</th>
@@ -17,19 +17,23 @@
                             $no = 1;
                             foreach ($temp as $t) {
                             ?>
-                                <tr>                                 
+                                <tr>
                                     <td><?= $no; ?></td>
                                     <td>
                                         <img src="<?= base_url('assets/img/upload/' . $t['image']); ?>" class="rounded" alt="No Picture" width="10%">
                                     </td>
                                     <td nowrap><?= $t['penulis']; ?></td>
                                     <td nowrap><?= $t['penerbit']; ?></td>
-                                    <td nowrap><?= substr($t['tahun_terbit'], 0, 4); ?></td>
+                                    <td nowrap><?= substr(
+                                                    $t['tahun_terbit'],
+                                                    0,
+                                                    4
+                                                ); ?></td>
                                     <td nowrap>
                                         <a href="<?= base_url('booking/hapusbooking/' . $t['id_buku']); ?>" onclick="return_konfirm('Yakin tidak Jadi Booking '.$t['judul_buku'])"><i class="btn btn-sm btn-outline-danger fas fw fa-trash"></i></a>
                                     </td>
                                 </tr>
-                            <?php $no++; 
+                            <?php $no++;
                             } ?>
                         </table>
                     </div>

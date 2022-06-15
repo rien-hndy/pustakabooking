@@ -36,8 +36,7 @@
                             <?php
                             $no = 1;
                             foreach ($detail as $d) {
-                            ?>
-                                <tr>
+                            ?><tr>
                                     <td><?= $no; ?></td>
                                     <td><?= $d['id_buku']; ?></td>
                                     <td><?= $d['judul_buku']; ?></td>
